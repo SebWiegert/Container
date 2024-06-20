@@ -1,0 +1,32 @@
+# Use Ubuntu 22.04 as the base image
+FROM ubuntu:22.04
+
+# Set environment variables to avoid user interaction during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    git \
+    libopencv-dev \
+    # Add any other dependencies required by mapper_from_images
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone the mapper_from_images repository
+# Replace the URL with the actual repository URL if it's different
+RUN git clone https://github.com/your-repository/mapper_from_images.git /mapper_from_images
+
+# Build mapper_from_images
+RUN cd /mapper_from_images && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make
+
+# Set the working directory to the build directory
+WORKDIR /mapper_from_images/build
+
+# Command to run when the container starts
+# This is just an example, replace it with the actual command you want to use
+CMD ["./mapper_from_images"]
