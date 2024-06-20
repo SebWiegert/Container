@@ -15,14 +15,25 @@ RUN apt-get update && apt-get install -y \
 
 # Clone the mapper_from_images repository
 # Replace the URL with the actual repository URL if it's different
-RUN git clone https://github.com/your-repository/mapper_from_images.git /mapper_from_images
+RUN git clone https://github.com/SebWiegert/Container.git /code
 
-# Build mapper_from_images
-RUN cd /mapper_from_images && \
+# Build aruco
+RUN cd /code/aruco-3.1.12 && \
     mkdir build && \
     cd build && \
     cmake .. && \
-    make
+    make -j4 && \
+    make install
+
+# Build mapper_from_images
+RUN cd /code/marker_mapper1.0.15 && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j4 && \
+    make install
+
+
 
 # Set the working directory to the build directory
 WORKDIR /mapper_from_images/build
