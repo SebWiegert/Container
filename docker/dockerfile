@@ -33,11 +33,8 @@ RUN cd /code/marker_mapper1.0.15 && \
     make -j4 && \
     make install
 
+# Set the environment variable to include the library path. otherwise, mapper_from_images won't work
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
-
-# Set the working directory to the build directory
-WORKDIR /mapper_from_images/build
-
-# Command to run when the container starts
-# This is just an example, replace it with the actual command you want to use
-CMD ["./mapper_from_images"]
+# List all files in the folder imgs
+RUN ls /imgs
