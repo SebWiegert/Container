@@ -33,8 +33,10 @@ RUN cd /code/marker_mapper1.0.15 && \
     make -j4 && \
     make install
 
-# Set the environment variable to include the library path. otherwise, mapper_from_images won't work
+# Set the environment variable to include the library path. Otherwise, mapper_from_images won't work
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
-# List all files in the folder imgs
-RUN ls /imgs
+# Set the working directory
+WORKDIR /
+
+
